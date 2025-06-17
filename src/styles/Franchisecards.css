@@ -1,0 +1,430 @@
+/* Enhanced Franchise Cards CSS */
+
+.franchise-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%);
+  padding: 3rem 1rem;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header Styles */
+.page-title {
+  font-size: 4rem;
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(45deg, #fbbf24, #f97316, #ef4444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 2rem;
+  animation: titlePulse 3s ease-in-out infinite;
+}
+.imgp1{
+  border-radius: 70px;
+  width: 100px;
+  height: 100px;
+}
+
+.page-title::after {
+  content: '';
+  display: block;
+  width: 8rem;
+  height: 4px;
+  background: linear-gradient(90deg, #fbbf24, #f97316);
+  margin: 1.5rem auto;
+  border-radius: 2px;
+}
+
+.page-subtitle {
+  font-size: 1.25rem;
+  color: #d1d5db;
+  text-align: center;
+  max-width: 42rem;
+  margin: 0 auto 4rem;
+}
+
+/* Container Styles */
+.franchise-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Card Styles */
+.franchise-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1.5rem;
+  padding: 2rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
+  opacity: 0;
+  animation: cardFadeIn 0.6s ease-out forwards;
+  overflow: hidden;
+}
+
+.franchise-card:nth-child(1) { animation-delay: 0ms; }
+.franchise-card:nth-child(2) { animation-delay: 100ms; }
+.franchise-card:nth-child(3) { animation-delay: 200ms; }
+.franchise-card:nth-child(4) { animation-delay: 300ms; }
+.franchise-card:nth-child(5) { animation-delay: 400ms; }
+.franchise-card:nth-child(6) { animation-delay: 500ms; }
+.franchise-card:nth-child(7) { animation-delay: 600ms; }
+.franchise-card:nth-child(8) { animation-delay: 700ms; }
+.franchise-card:nth-child(9) { animation-delay: 800ms; }
+.franchise-card:nth-child(10) { animation-delay: 900ms; }
+
+.franchise-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: var(--team-gradient);
+  border-radius: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.franchise-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8rem;
+  height: 8rem;
+  background: var(--team-gradient);
+  opacity: 0.05;
+  border-radius: 50%;
+  transform: translate(50%, -50%);
+  transition: all 0.5s ease;
+}
+
+.franchise-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.franchise-card:hover::before {
+  opacity: 1;
+}
+
+.franchise-card:hover::after {
+  transform: translate(25%, -25%) scale(1.2);
+  opacity: 0.1;
+}
+
+/* Logo Styles */
+.franchise-logo-container {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+  margin: 0 auto 1.5rem;
+  background: var(--team-gradient);
+  border-radius: 50%;
+  padding: 0.75rem;
+  transition: all 0.5s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.franchise-card:hover .franchise-logo-container {
+  transform: scale(1.1) rotate(12deg);
+  box-shadow: 0 15px 35px var(--team-shadow);
+}
+
+.franchise-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  transition: transform 0.5s ease;
+}
+
+.franchise-card:hover .franchise-logo {
+  transform: rotate(-12deg);
+}
+
+.logo-indicator {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--team-secondary);
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.franchise-card:hover .logo-indicator {
+  opacity: 1;
+  animation: ping 1s infinite;
+}
+
+/* Text Styles */
+.franchise-name {
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  transition: all 0.5s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.franchise-card:hover .franchise-name {
+  background: var(--team-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: scale(1.05);
+}
+
+.franchise-badge {
+  display: inline-block;
+  background: var(--team-gradient);
+  color: white;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  text-align: center;
+  transition: all 0.5s ease;
+  box-shadow: 0 4px 15px var(--team-shadow);
+  position: relative;
+  z-index: 10;
+}
+
+.franchise-card:hover .franchise-badge {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px var(--team-shadow);
+}
+
+/* Click Indicator */
+.click-indicator {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  background: var(--team-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  opacity: 0;
+  transition: all 0.5s ease;
+  z-index: 10;
+}
+
+.franchise-card:hover .click-indicator {
+  opacity: 1;
+  animation: bounce 1s infinite;
+}
+
+/* Shine Effect */
+.shine-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-100%) skewX(-12deg);
+  transition: transform 1s ease;
+  pointer-events: none;
+}
+
+.franchise-card:hover .shine-effect {
+  transform: translateX(100%) skewX(-12deg);
+}
+
+/* Team-specific CSS Variables */
+.franchise-card[data-team="CSK"] {
+  --team-primary: #FDB900;
+  --team-secondary: #0066CC;
+  --team-gradient: linear-gradient(135deg, #FDB900 0%, #FFD700 100%);
+  --team-shadow: rgba(253, 185, 0, 0.4);
+}
+
+.franchise-card[data-team="MI"] {
+  --team-primary: #004B9F;
+  --team-secondary: #87CEEB;
+  --team-gradient: linear-gradient(135deg, #004B9F 0%, #0066CC 100%);
+  --team-shadow: rgba(0, 75, 159, 0.4);
+}
+
+.franchise-card[data-team="LSG"] {
+  --team-primary: #1E90FF;
+  --team-secondary: #00BFFF;
+  --team-gradient: linear-gradient(135deg, #1E90FF 0%, #00BFFF 100%);
+  --team-shadow: rgba(30, 144, 255, 0.4);
+}
+
+.franchise-card[data-team="SRH"] {
+  --team-primary: #FF6600;
+  --team-secondary: #FFB347;
+  --team-gradient: linear-gradient(135deg, #FF6600 0%, #FF8C42 100%);
+  --team-shadow: rgba(255, 102, 0, 0.4);
+}
+
+.franchise-card[data-team="DC"] {
+  --team-primary: #17479E;
+  --team-secondary: #DC143C;
+  --team-gradient: linear-gradient(135deg, #17479E 0%, #1E5BBE 100%);
+  --team-shadow: rgba(23, 71, 158, 0.4);
+}
+
+.franchise-card[data-team="RR"] {
+  --team-primary: #E91E63;
+  --team-secondary: #FFB6C1;
+  --team-gradient: linear-gradient(135deg, #E91E63 0%, #FF69B4 100%);
+  --team-shadow: rgba(233, 30, 99, 0.4);
+}
+
+.franchise-card[data-team="PBKS"] {
+  --team-primary: #DC143C;
+  --team-secondary: #FFD700;
+  --team-gradient: linear-gradient(135deg, #DC143C 0%, #FF6347 100%);
+  --team-shadow: rgba(220, 20, 60, 0.4);
+}
+
+.franchise-card[data-team="GT"] {
+  --team-primary: #1B263B;
+  --team-secondary: #FFD700;
+  --team-gradient: linear-gradient(135deg, #1B263B 0%, #2E4057 100%);
+  --team-shadow: rgba(27, 38, 59, 0.4);
+}
+
+.franchise-card[data-team="KKR"] {
+  --team-primary: #3A0CA3;
+  --team-secondary: #FFD700;
+  --team-gradient: linear-gradient(135deg, #3A0CA3 0%, #7209B7 100%);
+  --team-shadow: rgba(58, 12, 163, 0.4);
+}
+
+.franchise-card[data-team="RCB"] {
+  --team-primary: #EC1C24;
+  --team-secondary: #FFD700;
+  --team-gradient: linear-gradient(135deg, #EC1C24 0%, #FF4444 100%);
+  --team-shadow: rgba(236, 28, 36, 0.4);
+}
+
+/* Bottom Decoration */
+.bottom-decoration {
+  margin-top: 5rem;
+  text-align: center;
+}
+
+.decoration-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.decoration-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #fbbf24, #f97316);
+  animation: pulse 2s infinite;
+}
+
+.decoration-dot:nth-child(1) { animation-delay: 0ms; }
+.decoration-dot:nth-child(2) { animation-delay: 200ms; }
+.decoration-dot:nth-child(3) { animation-delay: 400ms; }
+.decoration-dot:nth-child(4) { animation-delay: 600ms; }
+.decoration-dot:nth-child(5) { animation-delay: 800ms; }
+
+.decoration-text {
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+/* Animations */
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes titlePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .franchise-container {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 3rem;
+  }
+  
+  .franchise-container {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .franchise-card {
+    padding: 1.5rem 1rem;
+  }
+}

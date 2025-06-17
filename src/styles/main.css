@@ -1,0 +1,525 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --primary-color: #1e3a8a;
+  --secondary-color: #f59e0b;
+  --dark-bg: #0f172a;
+  --card-bg: rgba(30, 41, 59, 0.8);
+  --text-color: #ffffff;
+  --success-color: #10b981;
+  --danger-color: #ef4444;
+  --border-radius: 12px;
+  --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  background-color: var(--dark-bg);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.main-container {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  z-index: 1;
+}
+
+.background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+              url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+  background-size: cover;
+  z-index: -1;
+}
+
+.auction-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.8rem;
+  margin: 1.5rem 0;
+  background: linear-gradient(to right, #f59e0b, #f97316);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Player Display */
+.player-display {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.player-card1 {
+ background: rgba(0, 206, 209, 0.25);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  flex-direction: column;
+}
+
+.player-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.player-status {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 2;
+}
+
+.sold-status {
+  background: var(--success-color);
+  color: white;
+}
+
+.unsold-status {
+  background: var(--danger-color);
+  color: white;
+}
+
+.player-image-container {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  margin: 0 auto 2rem;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 4px solid var(--secondary-color);
+}
+
+.player-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.player-image-container:hover .player-img {
+  transform: scale(1.05);
+}
+
+.player-price-tag {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--secondary-color);
+  color: #1e3a8a;
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+  z-index: 2;
+}
+
+.player-info {
+  text-align: center;
+  width: 100%;
+}
+
+.player-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.player-details {
+  margin: 1.5rem 0;
+}
+
+.player-details p {
+  margin: 0.8rem 0;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.player-details strong {
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+/* Price Controls */
+.price-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.price-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  font-weight: 700;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.increase-btn {
+  background-color: var(--success-color);
+}
+
+.increase-btn:hover {
+  background-color: #059669;
+  transform: scale(1.1);
+}
+
+.decrease-btn {
+  background-color: var(--danger-color);
+}
+
+.decrease-btn:hover {
+  background-color: #dc2626;
+  transform: scale(1.1);
+}
+
+.price-value1 {
+  font-size: 3rem;
+  min-width: 120px;
+  text-align: center;
+  font-weight: 700;
+  color: rgb(233, 226, 226);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(5px);
+}
+
+/* Franchise Buttons */
+.franchise-buttons {
+  background: rgba(0, 206, 209, 0.25);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  flex-direction: column;
+}
+
+.franchise-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: var(--secondary-color);
+  font-family: 'Poppins', sans-serif;
+}
+
+.team-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.team-btn {
+  padding: 1.2rem 0.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 80px;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+  color: black;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.team-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+}
+
+.team-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Action Buttons */
+.action-buttons {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.unsold-btn, .view-toggle-btn {
+  padding: 1rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.unsold-btn {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.unsold-btn:hover {
+  background-color: #dc2626;
+  transform: translateY(-3px);
+}
+
+.view-toggle-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.view-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Navigation */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(5px);
+}
+
+.nav-btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: var(--transition);
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.player-count {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Utility Buttons */
+.utility-buttons {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 100;
+}
+
+.results-btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  color: white;
+  margin-right: 94rem; /* Increased gap between buttons */
+}
+.purses-btn{
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  color: white;
+}
+.results-btn {
+  background-color: var(--primary-color);
+}
+
+.purses-btn {
+  background-color: #7c3aed;
+}
+
+.results-btn:hover, .purses-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.bouncing-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  gap: 8px;
+}
+
+.bouncing-dots div {
+  width: 12px;
+  height: 12px;
+  background-color: var(--secondary-color);
+  border-radius: 50%;
+  display: inline-block;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.bouncing-dots div:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.bouncing-dots div:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% { 
+    transform: scale(0);
+  } 40% { 
+    transform: scale(1);
+  }
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  margin-top: 5rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.empty-state svg {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .player-display {
+    grid-template-columns: 1fr;
+  }
+  
+  .auction-title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    padding: 1.5rem;
+  }
+  
+  .player-image-container {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .team-buttons-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .utility-buttons {
+    flex-direction: column;
+    right: 2rem;
+    left: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .auction-title {
+    font-size: 1.8rem;
+  }
+  
+  .player-card, .franchise-buttons {
+    padding: 1.5rem;
+  }
+  
+  .team-buttons-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .price-controls {
+    gap: 1rem;
+  }
+  
+  .price-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+  
+  .price-value {
+    font-size: 1.5rem;
+    min-width: 100px;
+  }
+}
