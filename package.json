@@ -1,6 +1,6 @@
 {
-  "name": "IPL_frontend",
-  "homepage": "https://6304196967.github.io/IPL_FRONTEND/",
+  "homepage": "https://6304196967.github.io/IPL_FRONTEND",
+  "name": "auction-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
