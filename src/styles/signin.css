@@ -1,0 +1,184 @@
+/* Sign In Page Styles */
+.signin-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: 
+    url('https://wallpapercave.com/wp/wp11602538.jpg') no-repeat center center/cover;
+  padding: 2rem;
+}
+
+.signin-card {
+    background: rgba(30, 41, 59, 0.35);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border-radius: 16px;
+    padding: 3rem;
+    width: 100%;
+    max-width: 550px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1.5px solid rgba(255,255,255,0.4);
+    border-left: 1.5px solid rgba(255,255,255,0.4);
+}
+
+
+.signin-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.signin-title {
+  color: #f59e0b;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.signin-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.signin-input-container {
+  margin-bottom: 1.5rem;
+}
+
+.signin-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.signin-input {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.signin-input:focus {
+  outline: none;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+.signin-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.signin-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.signin-button {
+  width: 100%;
+  padding: 1rem;
+  background: #f59e0b;
+  color: #1e293b;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.signin-button:hover {
+  background: #f97316;
+  transform: translateY(-2px);
+}
+
+.signin-button:disabled {
+  background: #64748b;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.signin-forgot-password {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.signin-forgot-password:hover {
+  color: #f59e0b;
+}
+
+.signin-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.signin-signup-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+}
+
+.signin-signup-link {
+  color: #f59e0b;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.signin-signup-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .signin-card {
+    padding: 2rem;
+  }
+  
+  .signin-title {
+    font-size: 2rem;
+  }
+  
+  .signin-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .signin-container {
+    padding: 1rem;
+  }
+  
+  .signin-card {
+    padding: 1.5rem;
+  }
+}
+@keyframes signin-fade-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.signin-card {
+    /* existing styles... */
+    animation: signin-fade-in-up 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}

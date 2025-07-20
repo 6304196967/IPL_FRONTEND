@@ -16,7 +16,12 @@
 .loading-content {
   text-align: center;
 }
-
+.base-price2 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4f46e5;
+  margin-top: 8px;
+}
 .loading-spinner {
   width: 64px;
   height: 64px;

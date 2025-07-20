@@ -80,7 +80,215 @@ body {
   display: flex;
   flex-direction: column;
 }
+/* Current bid display for non-organizers */
+.current-bid-display {
+  margin: 20px 0;
+  text-align: center;
+}
 
+.current-bid-display h4 {
+  color: #94a3b8;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.bid-amount {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.interested-teams-container {
+  margin-top: 1rem;
+}
+
+.interested-teams-title {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+}
+
+.interested-teams-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.team-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* History card styles */
+
+/* WhatsApp-style bidding history */
+.history-container {
+  margin: 1rem 0;
+}
+
+.history-card {
+  background: rgba(0, 206, 209, 0.25);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  height:900px;
+}
+
+.history-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #000000;
+  margin: 0 0 1rem 0;
+  text-align: center;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 0.5rem;
+}
+
+.history-messages {
+  max-height: 800px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+.message-bubble {
+  background: #dcf8c6;
+  border-radius: 18px 18px 4px 18px;
+  padding: 0.75rem 1rem;
+  max-width: 85%;
+  align-self: flex-end;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.message-text {
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.message-text strong {
+  color: #075e54;
+  font-weight: 600;
+}
+
+.message-time {
+  font-size: 0.75rem;
+  color: #667781;
+  align-self: flex-end;
+  margin-top: 0.25rem;
+}
+
+.history-loading,
+.history-empty {
+  text-align: center;
+  color: #000000;
+  font-style: italic;
+  padding: 2rem;
+}
+
+/* Scrollbar styling for webkit browsers */
+.history-messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.history-messages::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.history-messages::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.history-messages::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Animation for new messages */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .message-bubble {
+    max-width: 95%;
+    padding: 0.6rem 0.8rem;
+  }
+  
+  .message-text {
+    font-size: 0.85rem;
+  }
+  
+  .history-messages {
+    max-height: 250px;
+  }
+}
+
+.team-logo-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.team-logo-circle:hover {
+  transform: scale(1.1);
+}
+
+.raised-hands-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.history-price {
+  flex: 1;
+  text-align: right;
+  font-weight: bold;
+  color: #f8fafc;
+}
 .player-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
@@ -523,3 +731,185 @@ body {
     min-width: 100px;
   }
 }
+/* Enhanced Hand Raise Button */
+.hand-raise-btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem auto;
+  width: 80%;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  z-index: 1;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.hand-raise-btn.raised {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.hand-raise-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0));
+  z-index: -1;
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.hand-raise-btn:hover::before {
+  opacity: 1;
+}
+
+.hand-raise-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.hand-raise-btn.raised:hover {
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+.hand-raise-btn:active {
+  transform: translateY(0);
+}
+
+/* Pulse animation when raised */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.hand-raise-btn.raised {
+  animation: pulse 1.5s infinite;
+}
+
+/* Enhanced Team Badges for Organizer */
+.raised-hands-container {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.raised-hands-title {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin-bottom: 0.8rem;
+  text-align: center;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.raised-hands-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.team-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid white;
+}
+
+.team-badge::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0)
+  );
+  transform: rotate(30deg);
+  transition: all 0.3s ease;
+}
+
+.team-badge:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.team-badge:hover::after {
+  left: 100%;
+}
+
+/* Tooltip for team badges */
+.team-badge::before {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.team-badge:hover::before {
+  opacity: 1;
+  visibility: visible;
+  bottom: calc(100% + 8px);
+}
+
+/* Bounce animation for team badges */
+@keyframes bounceIn {
+  0% { transform: scale(0.1); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.team-badge {
+  animation: bounceIn 0.6s ease both;
+}
+
+/* Delay animations for multiple badges */
+.team-badge:nth-child(1) { animation-delay: 0.1s; }
+.team-badge:nth-child(2) { animation-delay: 0.2s; }
+.team-badge:nth-child(3) { animation-delay: 0.3s; }
+.team-badge:nth-child(4) { animation-delay: 0.4s; }
+.team-badge:nth-child(5) { animation-delay: 0.5s; }

@@ -1,96 +1,168 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../styles/Franchisecards.css'; // Ensure you have the correct path to your CSS file
-const franchises = [
-  {
-    name: 'Royal Challengers Bangalore',
-    shortName: 'RCB',
-    logo: 'https://th.bing.com/th/id/OIP.FteqEE-elRk0NvABZdWChgHaHa?w=181&h=181&c=7&r=0&o=5&dpr=1.8&pid=1.7',
-    website: 'https://www.royalchallengers.com/',
-    primaryColor: '#EC1C24',
-    secondaryColor: '#FFD700'
-  },
-  {
-    name: 'Chennai Super Kings',
-    shortName: 'CSK',
-    logo: 'https://th.bing.com/th/id/OIP.Gq0OuTy8LZvblFIVt8mASgHaGG?w=275&h=226&c=8&rs=1&qlt=90&o=6&dpr=1.8&pid=3.1&rm=2',
-    website: 'https://www.chennaisuperkings.com/',
-    primaryColor: '#FDB900',
-    secondaryColor: '#00A7E1'
-  },
-  {
-    name: 'Mumbai Indians',
-    shortName: 'MI',
-    logo: 'https://www.pngall.com/wp-content/uploads/2017/04/Mumbai-Indians-Logo-PNG.png',
-    website: 'https://www.mumbaiindians.com/',
-    primaryColor: '#004C93',
-    secondaryColor: '#FFD200'
-  },
-  {
-    name: 'Lucknow Super Giants',
-    shortName: 'LSG',
-    logo: 'https://th.bing.com/th/id/OIP.P_aqCIUNS1UBuLtVmgaOnwHaEK?w=324&h=182&c=7&r=0&o=5&dpr=1.8&pid=1.7',
-    website: 'https://www.lucknowsupergiants.in/',
-    primaryColor: '#00A8CC',
-    secondaryColor: '#FF6B35'
-  },
-  {
-    name: 'Sunrisers Hyderabad',
-    shortName: 'SRH',
-    logo: 'https://th.bing.com/th/id/OIP.cMarPH0NiYx4KXdB8xI9hgHaFj?w=185&h=180&c=7&r=0&o=5&dpr=1.8&pid=1.7',
-    website: 'https://www.sunrisershyderabad.in/',
-    primaryColor: '#FF822A',
-    secondaryColor: '#000000'
-  },
-  {
-    name: 'Delhi Capitals',
-    shortName: 'DC',
-    logo: 'https://upload.wikimedia.org/wikipedia/en/2/2f/Delhi_Capitals.svg',
-    website: 'https://www.delhicapitals.in/',
-    primaryColor: '#17479E',
-    secondaryColor: '#ED1C24'
-  },
-  {
-    name: 'Rajasthan Royals',
-    shortName: 'RR',
-    logo: 'https://th.bing.com/th/id/OIP.r4olHUnlB1H8wbPgKdrreQHaLm?w=115&h=180&c=7&r=0&o=5&dpr=1.8&pid=1.7',
-    website: 'https://www.rajasthanroyals.com/',
-    primaryColor: '#E4007C',
-    secondaryColor: '#FDB900'
-  },
-  {
-    name: 'Punjab Kings',
-    shortName: 'PBKS',
-    logo: 'https://upload.wikimedia.org/wikipedia/en/d/d4/Punjab_Kings_Logo.svg',
-    website: 'https://www.punjabkings.in/',
-    primaryColor: '#DC1F26',
-    secondaryColor: '#B49C2F'
-  },
-  {
-    name: 'Gujarat Titans',
-    shortName: 'GT',
-    logo: 'https://th.bing.com/th/id/OIP.QEIvRb7cLrg6MYmdfwnvBgHaHa?w=171&h=180&c=7&r=0&o=5&dpr=1.8&pid=1.7',
-    website: 'https://www.gujarattitansipl.com/',
-    primaryColor: '#1B2951',
-    secondaryColor: '#B49C2F'
-  },
-  {
-    name: 'Kolkata Knight Riders',
-    shortName: 'KKR',
-    logo: 'https://th.bing.com/th/id/OIP.TWWj4uj37BzbxEfJNGpuIAAAAA?w=117&h=180&c=7&r=0&o=5&dpr=1.8&pid=1.7',
-    website: 'https://www.kkr.in/',
-    primaryColor: '#3A225D',
-    secondaryColor: '#B49C2F'
-  },
-  
-];
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import '../styles/Franchisecards.css';
 
 const FranchiseCards = () => {
+  const { auctionId } = useParams();
+  const [teams, setTeams] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
-const navigate = useNavigate();
-   const handleCardClick = (shortName) => {
-  navigate(`/franchise/${shortName}`);
-};
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`https://ipl-server-mj6l.onrender.com/api/auctionlive/${auctionId}`);
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch teams');
+        }
+        
+        const data = await response.json();
+        
+        if (!data.teams || !Array.isArray(data.teams)) {
+          throw new Error('Invalid teams data');
+        }
+        
+        // Map the backend data to our frontend format
+        const formattedTeams = data.teams.map(team => ({
+          name: team.teamname || 'Unknown Team',
+          shortName: getTeamInitials(team.teamname || 'Unknown Team'),
+          logo: team.logo, // This now comes from backend as base64 URL or null
+          website: team.website || '#',
+          primaryColor: team.primaryColor || generateAttractiveColor(team.teamname, 'primary'),
+          secondaryColor: team.secondaryColor || generateAttractiveColor(team.teamname, 'secondary'),
+          email: team.email,
+          phonenumber: team.phonenumber
+        }));
+        
+        setTeams(formattedTeams);
+      } catch (err) {
+        console.error('Error fetching teams:', err);
+        setError(err.message);
+        // Fallback to default teams if available
+        setTeams(getDefaultTeams());
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchTeams();
+  }, [auctionId]);
+
+  // Function to generate attractive color combinations based on team name
+  const generateAttractiveColor = (teamName, type) => {
+    if (!teamName) {
+      return type === 'primary' ? '#3A225D' : '#B49C2F';
+    }
+    
+    // Create a simple hash from the team name for consistent colors
+    const hash = Array.from(teamName).reduce((acc, char) => {
+      return char.charCodeAt(0) + ((acc << 5) - acc);
+    }, 0);
+    
+    // Predefined attractive color combinations
+    const colorPairs = [
+      { primary: '#1E3A8A', secondary: '#F59E0B' }, // Navy & Amber
+      { primary: '#047857', secondary: '#ECFDF5' },  // Emerald & Mint
+      { primary: '#7C3AED', secondary: '#C4B5FD' }, // Violet & Light Violet
+      { primary: '#DC2626', secondary: '#FEE2E2' }, // Red & Light Red
+      { primary: '#0E7490', secondary: '#A5F3FC' }, // Teal & Cyan
+      { primary: '#9333EA', secondary: '#E9D5FF' },  // Purple & Light Purple
+      { primary: '#EA580C', secondary: '#FFEDD5' },  // Orange & Light Orange
+      { primary: '#2563EB', secondary: '#BFDBFE' },  // Blue & Light Blue
+    ];
+    
+    // Select a color pair based on the hash
+    const pair = colorPairs[Math.abs(hash) % colorPairs.length];
+    return pair[type];
+  };
+
+  // Function to get team initials
+  const getTeamInitials = (name) => {
+    if (!name) return 'TM';
+    const words = name.split(' ');
+    if (words.length === 1) return name.substring(0, 2).toUpperCase();
+    return words.map(word => word[0]).join('').toUpperCase().substring(0, 2);
+  };
+
+  const getDefaultTeams = () => {
+    // Fallback teams if API fails
+    return [
+      {
+        name: 'Team Not Found',
+        shortName: 'ERR',
+        logo: null,
+        website: '#',
+        primaryColor: '#FF0000',
+        secondaryColor: '#FFFFFF'
+      }
+    ];
+  };
+
+  const handleCardClick = (shortName) => {
+    const teamName = teams.find(team => team.shortName === shortName)?.name;
+    if (teamName) {
+      navigate(`/franchise/?teamName=${teamName.replace(/\s+/g, '')}&auctionId=${auctionId}`);
+    }
+  };
+
+  // Handle image load errors
+  const handleImageError = (e) => {
+    console.error('Logo failed to load:', e.target.src);
+    e.target.style.display = 'none';
+  };
+
+  if (isLoading) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)'
+      }}>
+        <div className="bouncing-dots">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)',
+        color: 'white'
+      }}>
+        <h2>Error Loading Teams</h2>
+        <p>{error}</p>
+        <button 
+          onClick={() => window.location.reload()}
+          style={{
+            marginTop: '20px',
+            padding: '10px 20px',
+            background: '#3A225D',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer'
+          }}
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div style={{
@@ -123,7 +195,7 @@ const navigate = useNavigate();
           margin: '0 auto',
           lineHeight: '1.6'
         }}>
-          Discover the power-packed teams of the Indian Premier League
+          Teams participating in this auction
         </p>
       </div>
 
@@ -136,9 +208,9 @@ const navigate = useNavigate();
         margin: '0 auto',
         padding: '0 1rem'
       }}>
-        {franchises.map((team) => (
+        {teams.map((team, index) => (
           <div
-            key={team.shortName}
+            key={`${team.shortName}-${index}`}
             onClick={() => handleCardClick(team.shortName)}
             onMouseEnter={() => setHoveredCard(team.shortName)}
             onMouseLeave={() => setHoveredCard(null)}
@@ -162,22 +234,7 @@ const navigate = useNavigate();
               overflow: 'hidden'
             }}
           >
-            {/* Animated Background */}
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: `linear-gradient(45deg, ${team.primaryColor}10, ${team.secondaryColor}10)`,
-              opacity: hoveredCard === team.shortName ? 1 : 0,
-              transition: 'opacity 0.3s ease',
-              borderRadius: '20px'
-            }} />
-
-            {/* Content */}
             <div style={{ position: 'relative', zIndex: 2 }}>
-              {/* Logo Container */}
               <div style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -185,8 +242,8 @@ const navigate = useNavigate();
                 position: 'relative'
               }}>
                 <div style={{
-                  width: '100px',
-                  height: '100px',
+                  width: '120px',
+                  height: '120px',
                   borderRadius: '50%',
                   background: `linear-gradient(135deg, ${team.primaryColor}20, ${team.secondaryColor}20)`,
                   display: 'flex',
@@ -196,20 +253,44 @@ const navigate = useNavigate();
                   transform: hoveredCard === team.shortName ? 'rotate(5deg)' : 'rotate(0deg)',
                   transition: 'transform 0.3s ease'
                 }}>
-                  <img className="imgp1"
-                    src={team.logo}
-                    alt={`${team.name} Logo`}
+                  {team.logo ? (
+                    <img 
+                      src={team.logo}
+                      alt={`${team.name} Logo`}
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        objectFit: 'contain',
+                        filter: hoveredCard === team.shortName ? 'brightness(1.2)' : 'brightness(1)',
+                        transition: 'filter 0.3s ease'
+                      }}
+                      onError={handleImageError}
+                      onLoad={() => console.log('Logo loaded successfully for:', team.name)}
+                    />
+                  ) : null}
+                  
+                  {/* Fallback initials - always render but hide if logo loads successfully */}
+                  <div 
                     style={{
-                      width: '70px',
-                      height: '70px',
-                      objectFit: 'contain',
-                      filter: hoveredCard === team.shortName ? 'brightness(1.2)' : 'brightness(1)'
+                      width: '80px',
+                      height: '80px',
+                      borderRadius: '50%',
+                      background: `linear-gradient(135deg, ${team.primaryColor}, ${team.secondaryColor})`,
+                      display: team.logo ? 'none' : 'flex', // Hide if logo exists
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'white',
+                      fontSize: '32px',
+                      fontWeight: 'bold',
+                      textShadow: '0 2px 4px rgba(0,0,0,0.3)'
                     }}
-                  />
+                    id={`fallback-${team.shortName}`}
+                  >
+                    {getTeamInitials(team.name)}
+                  </div>
                 </div>
               </div>
 
-              {/* Team Name */}
               <h3 style={{
                 fontSize: '1.4rem',
                 fontWeight: '700',
@@ -221,7 +302,6 @@ const navigate = useNavigate();
                 {team.name}
               </h3>
 
-              {/* Short Name Badge */}
               <div style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -240,12 +320,11 @@ const navigate = useNavigate();
                 </div>
               </div>
 
-              {/* Click Indicator */}
               <div style={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                color: team.primaryColor,
+                color: 'white',
                 fontSize: '1.2rem',
                 fontWeight: '600',
                 opacity: hoveredCard === team.shortName ? 1 : 0.6,
@@ -255,59 +334,13 @@ const navigate = useNavigate();
                 View Squad →
               </div>
             </div>
-
-            {/* Shine Effect */}
-            <div style={{
-              position: 'absolute',
-              top: '-50%',
-              left: '-50%',
-              width: '200%',
-              height: '200%',
-              background: 'linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent)',
-              transform: hoveredCard === team.shortName ? 'translateX(100%)' : 'translateX(-100%)',
-              transition: 'transform 0.6s ease',
-              pointerEvents: 'none'
-            }} />
           </div>
         ))}
       </div>
 
-      {/* Bottom Decoration */}
-      <div style={{
-        textAlign: 'center',
-        marginTop: '4rem',
-        color: '#666'
-      }}>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '1rem',
-          marginBottom: '1rem'
-        }}>
-          {[...Array(5)].map((_, i) => (
-            <div
-              key={i}
-              style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                background: 'linear-gradient(45deg, #ff6b6b, #4ecdc4)',
-                animation: `pulse 2s infinite ${i * 0.2}s`
-              }}
-            />
-          ))}
-        </div>
-        <p style={{
-          fontSize: '1rem',
-          color: '#888'
-        }}>
-          Click any team to explore their squad
-        </p>
-      </div>
-
       {/* Back Button */}
       <button
-        onClick={() => window.location.assign('/')}
+        onClick={() => navigate(`/live/${auctionId}`)}
         style={{
           position: 'fixed',
           bottom: '32px',
@@ -334,16 +367,8 @@ const navigate = useNavigate();
           e.target.style.boxShadow = '0 8px 25px rgba(0,0,0,0.3)';
         }}
       >
-        ← Back
+        ← Back to Auction
       </button>
-
-      {/* Global Styles */}
-      <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 0.4; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.2); }
-        }
-      `}</style>
     </div>
   );
 };
