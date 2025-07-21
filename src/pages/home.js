@@ -24,7 +24,8 @@ const WelcomePage = () => {
             <h2 className="welcome-subtitle">IPL Mock Auction Dashboard</h2>
             <p className="welcome-description">
               Experience the thrill of IPL auctions with real-time tracking, team analysis, 
-              and player statistics. Build your dream team and dominate the virtual league!
+              and player statistics. Create auctions and Organize the event.
+              join auctions and build your dream team and dominate the virtual league!
             </p>
             <button 
               className="get-started-button"

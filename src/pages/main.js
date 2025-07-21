@@ -58,7 +58,7 @@ const Main = () => {
     const userEmail = localStorage.getItem('email');
     
     // Initialize WebSocket connection
-    socketRef.current = io('http://localhost:3000', {
+    socketRef.current = io('https://ipl-server-mj6l.onrender.com', {
       query: { auctionId, userEmail }
     });
 
@@ -648,29 +648,38 @@ const Main = () => {
                 </button>
               )}
 
-              {/* Raised hands display - FIXED to use playerId */}
-              {userRole === 'organizer' && raisedHands.length > 0 && (
-                <div className="raised-hands-container">
-                  <h4>Interested Teams:</h4>
-                  <div className="raised-hands-list">
-                    {raisedHands
-                      .filter(hand => hand.playerId === currentPlayer.playerId)
-                      .map((hand, index) => (
-                        <div 
-                          key={index} 
-                          className="team-badge"
-                          style={{ 
-                            backgroundColor: generateTeamColor(hand.teamName),
-                            borderColor: generateTeamColor(hand.teamName)
-                          }}
-                          title={hand.teamName}
-                        >
-                          {hand.teamName.substring(0, 2).toUpperCase()}
-                        </div>
-                      ))}
-                  </div>
-                </div>
+              {raisedHands.length > 0 && raisedHands.some(hand => hand.playerId === currentPlayer.playerId) && (
+  <div className="raised-hands-container">
+    <h4>Interested Teams:</h4>
+    <div className="raised-hands-list">
+      {raisedHands
+        .filter(hand => hand.playerId === currentPlayer.playerId)
+        .map((hand, index) => {
+          const isCurrentUserTeam = auction?.teams?.some(
+            team => team.teamname === hand.teamName && team.email === localStorage.getItem('email')
+          );
+          
+          return (
+            <div 
+              key={index} 
+              className={`team-badge ${isCurrentUserTeam ? 'current-user-team' : ''}`}
+              style={{ 
+                backgroundColor: generateTeamColor(hand.teamName),
+                borderColor: generateTeamColor(hand.teamName),
+                opacity: isCurrentUserTeam ? 1 : 0.8,
+              }}
+              title={hand.teamName}
+            >
+              {hand.teamName.substring(0, 2).toUpperCase()}
+              {isCurrentUserTeam && (
+                <span className="you-badge">YOU</span>
               )}
+            </div>
+          );
+        })}
+    </div>
+  </div>
+)}
               
               {/* Modified navigation buttons - only show for organizer */}
               {userRole === 'organizer' && (

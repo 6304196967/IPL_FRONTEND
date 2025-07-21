@@ -322,21 +322,20 @@ const OngoingAuctions = () => {
   if (loading) {
     return (
       <div className="ongoing-auctions-page">
-        <Navbar />
-        <div className="loading-container">
-          <div className="loading-spinner">
-            <div className="spinner-ring"></div>
+        <div className="loading-container4">
+          <div className="loading-spinner2">
           </div>
           <h3>Loading Upcoming Auctions...</h3>
-          <p>Please wait while we fetch available auctions</p>
         </div>
       </div>
     );
   }
 
   return (
+    <div>
+            <Navbar />
+
     <div className="ongoing-auctions-page">
-      <Navbar />
       <div className="auctions-container">
         <div className="page-header">
           <h1 className="page-title">Upcoming Auctions</h1>
@@ -518,6 +517,7 @@ const OngoingAuctions = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };

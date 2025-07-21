@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, User, Home, Gavel, Play } from 'lucide-react';
-import '../styles/navbar.css';
-
+import { Menu, X, User, Home, Gavel, Play } from 'lucide-react';
+import '../styles/navbar.css'; // Assuming you have a CSS file for navbar styles
 const Navbar = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleNavigation = (path) => {
     navigate(path);
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -17,48 +17,34 @@ const Navbar = () => {
         <div className="navbar-content">
           {/* Logo and Navigation Links */}
           <div className="navbar-brand">
-            <div className="navbar-logo">
-              <h1>IPL MOCK Auction</h1>
+            <div className="navbar-logo" onClick={() => handleNavigation('/')}>
+              <h1>IPL MOCK AUCTION SYSTEM</h1>
             </div>
             
             <div className="navbar-links">
               <ul className="navbar-links-list">
                 <li>
-                  <button
-                    onClick={() => handleNavigation('/dashboard')}
-                    className="navbar-link"
-                  >
-                    <Home size={25} />
+                  <button onClick={() => handleNavigation('/dashboard')} className="navbar-link">
+                    <Home size={20} />
                     <span>Home</span>
                   </button>
                 </li>
-                
                 <li>
-                  <button
-                    onClick={() => handleNavigation('/my-auctions')}
-                    className="navbar-link"
-                  >
-                    <Gavel size={25} />
+                  <button onClick={() => handleNavigation('/my-auctions')} className="navbar-link">
+                    <Gavel size={20} />
                     <span>My Auctions</span>
                   </button>
                 </li>
-                
                 <li>
-                  <button
-                    onClick={() => handleNavigation('/upcoming-auctions')}
-                    className="navbar-link"
-                  >
-                    <Play size={25} />
-                    <span>Upcoming Auctions</span>
+                  <button onClick={() => handleNavigation('/upcoming-auctions')} className="navbar-link">
+                    <Play size={20} />
+                    <span>Upcoming</span>
                   </button>
-                  </li>
-                  <li>
-                  <button
-                    onClick={() => handleNavigation('/joined-auctions')}
-                    className="navbar-link"
-                  >
-                    <Gavel size={25} />
-                    <span>Joined Auctions</span>
+                </li>
+                <li>
+                  <button onClick={() => handleNavigation('/joined-auctions')} className="navbar-link">
+                    <Gavel size={20} />
+                    <span>Joined</span>
                   </button>
                 </li>
               </ul>
@@ -66,46 +52,38 @@ const Navbar = () => {
           </div>
 
           <div className="navbar-actions">
-            
-
-            {/* Profile Button */}
-            <button
-              onClick={() => handleNavigation('/profile')}
-              className="profile-button"
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="mobile-menu-button"
             >
-              <User size={20} color="white" />
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+            
+            <button onClick={() => handleNavigation('/profile')} className="profile-button">
+              <User size={20} />
             </button>
           </div>
         </div>
       </div>
 
       {/* Mobile Navigation */}
-      <div className="mobile-menu">
+      <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-menu-content">
-          <button
-            onClick={() => handleNavigation('/dashboard')}
-            className="mobile-menu-link"
-          >
-            Home
+          <button onClick={() => handleNavigation('/dashboard')} className="mobile-menu-link">
+            <Home size={20} />
+            <span>Home</span>
           </button>
-          <button
-            onClick={() => handleNavigation('/my-auctions')}
-            className="mobile-menu-link"
-          >
-            My Auctions
+          <button onClick={() => handleNavigation('/my-auctions')} className="mobile-menu-link">
+            <Gavel size={20} />
+            <span>My Auctions</span>
           </button>
-          <button
-            onClick={() => handleNavigation('/upcoming-auctions')}
-            className="mobile-menu-link"
-          >
-            Upcoming Auctions
+          <button onClick={() => handleNavigation('/upcoming-auctions')} className="mobile-menu-link">
+            <Play size={20} />
+            <span>Upcoming</span>
           </button>
-          <button
-            onClick={() => handleNavigation('/joined-auctions')}
-            className="mobile-menu-link"
-          >
-            Joined Auctions   
-            
+          <button onClick={() => handleNavigation('/joined-auctions')} className="mobile-menu-link">
+            <Gavel size={20} />
+            <span>Joined</span>
           </button>
         </div>
       </div>

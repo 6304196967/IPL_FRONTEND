@@ -306,21 +306,20 @@ const MyAuctions = () => {
   if (loading) {
     return (
       <div className="my-auctions-page">
-        <div className="loading-container">
+        <div className="loading-container3">
           <div className="loading-spinner">
-            <div className="spinner-ring"></div>
           </div>
           <h3>Loading Your Auctions...</h3>
-          <p>Please wait while we fetch your auction data</p>
         </div>
       </div>
     );
   }
 
   return (
+    <div>
+      <Navbar />
     <div className="my-auctions-page">
       <div className="auctions-container">
-        {/* Header Section */}
         <div className="auctions-header">
           <button onClick={() => navigate(-1)} className="back-btn">
             <ArrowLeft size={20} />
@@ -438,7 +437,7 @@ const MyAuctions = () => {
                     
                     <div className="detail-item">
                       <IndianRupee size={16} />
-                      <span>Budget: ₹{auction.budgetperteam} Cr • Entry: ₹{auction.entryfees}</span>
+                      <span>Budget: ₹{auction.budgetperteam} Lakhs • Entry: ₹{auction.entryfees}</span>
                     </div>
                     
                     {auction.rewardprize > 0 && (
@@ -779,6 +778,7 @@ const MyAuctions = () => {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };

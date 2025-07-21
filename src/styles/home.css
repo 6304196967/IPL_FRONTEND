@@ -16,25 +16,26 @@
 .welcome-page {
   position: relative;
   min-height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 /* Sign In Button */
 .sign-in-button {
-  position: absolute;
-  top: 30px;
-  right: 30px;
+  position: fixed; /* Changed to fixed for better mobile access */
+  top: 20px;
+  right: 20px;
   background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
   color: #1e293b;
   border: 2px solid #f59e0b;
-  padding: 0.8rem 2rem;
-  font-size: 1.1rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
   border-radius: 50px;
   cursor: pointer;
   transition: var(--transition);
   z-index: 10;
+  white-space: nowrap; /* Prevent text wrapping */
 }
-
 
 .sign-in-button:hover {
   background: rgba(255, 255, 255, 0.1);
@@ -49,78 +50,56 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
   position: relative;
-  overflow: hidden;
 }
 
 .welcome-content {
-  max-width: 1200px;
   width: 100%;
+  max-width: 1200px;
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
   z-index: 2;
   text-align: center;
+  padding: 1rem;
 }
 
 .welcome-text {
   animation: fadeInUp 0.8s ease-out;
-  padding: 3rem;
+  padding: 2rem;
   background: rgba(30, 41, 59, 0.35);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   border-radius: var(--border-radius);
   border: 1.5px solid rgba(255, 255, 255, 0.18);
-  max-width: 900px;
+  width: 100%;
   margin: 0 auto;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
 }
 
 .welcome-title {
-  font-size: 4.5rem;
+  font-size: 2.5rem;
   color: white;
-  margin-bottom: 1.5rem;
-  line-height: 1.1;
+  margin-bottom: 1rem;
+  line-height: 1.2;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   font-weight: 800;
 }
 
-.highlight {
-  color: var(--secondary-color);
-  position: relative;
-  display: inline-block;
-  font-weight: 900;
-}
-
-.highlight::after {
-  content: '';
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  width: 100%;
-  height: 12px;
-  background: rgba(245, 158, 11, 0.4);
-  z-index: -1;
-  border-radius: 6px;
-}
-
 .welcome-subtitle {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   font-weight: 600;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .welcome-description {
   color: rgba(255, 255, 255, 0.85);
-  font-size: 1.4rem;
-  line-height: 1.7;
-  margin-bottom: 3rem;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
@@ -128,17 +107,18 @@
   background: var(--secondary-color);
   color: var(--dark-bg);
   border: none;
-  padding: 1.2rem 3rem;
-  font-size: 1.4rem;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   border-radius: 50px;
   display: inline-flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.8rem;
   cursor: pointer;
   transition: var(--transition);
   box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
   margin-top: 1rem;
+  width: auto; /* Allow button to shrink on mobile */
 }
 
 .get-started-button:hover {
@@ -167,8 +147,12 @@
   }
 }
 
-/* Responsive styles */
-@media (max-width: 992px) {
+/* Responsive styles - Tablet */
+@media (min-width: 768px) {
+  .welcome-text {
+    padding: 3rem;
+  }
+  
   .welcome-title {
     font-size: 3.5rem;
   }
@@ -178,62 +162,60 @@
   }
   
   .welcome-description {
-    font-size: 1.2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .welcome-container {
-    padding: 1rem;
-  }
-  
-  .welcome-text {
-    padding: 2rem;
-  }
-  
-  .welcome-title {
-    font-size: 2.8rem;
-  }
-  
-  .welcome-subtitle {
-    font-size: 1.6rem;
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .get-started-button {
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
+    padding: 1.2rem 3rem;
+    font-size: 1.3rem;
   }
 
   .sign-in-button {
-    top: 20px;
-    right: 20px;
-    padding: 0.6rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    top: 30px;
+    right: 30px;
   }
 }
 
-@media (max-width: 480px) {
+/* Responsive styles - Desktop */
+@media (min-width: 992px) {
   .welcome-title {
-    font-size: 2.2rem;
-  }
-  
-  .highlight::after {
-    height: 8px;
-    bottom: 5px;
+    font-size: 4.5rem;
   }
   
   .welcome-subtitle {
-    font-size: 1.4rem;
+    font-size: 2.5rem;
   }
   
   .welcome-description {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
   }
+  
+  .get-started-button {
+    font-size: 1.4rem;
+  }
+}
 
-  .sign-in-button {
-    top: 15px;
-    right: 15px;
-    padding: 0.5rem 1.2rem;
-    font-size: 0.9rem;
+/* Very small mobile devices */
+@media (max-width: 400px) {
+  .welcome-title {
+    font-size: 2rem;
+  }
+  
+  .welcome-subtitle {
+    font-size: 1.3rem;
+  }
+  
+  .welcome-description {
+    font-size: 1rem;
+  }
+  
+  .get-started-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
   }
 }

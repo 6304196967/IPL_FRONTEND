@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/navbar';
 import { Play, Users, Clock, Trophy, MapPin, Calendar, IndianRupee, CheckCircle } from 'lucide-react';
 import { useToast } from '../hooks/useToast';
-import '../styles/upcomingauctions.css';
+import '../styles/joinedauctions.css';
 import Swal from 'sweetalert2';
 
 const JoinedAuctions = () => {
@@ -123,9 +123,8 @@ const JoinedAuctions = () => {
   if (loading) {
     return (
       <div className="ongoing-auctions-page">
-        <Navbar />
-        <div className="loading-container">
-          <div className="loading-spinner"></div>
+        <div className="loading-container0">
+          <div className="loading-spinner0"></div>
           <h3>Loading Your Joined Auctions...</h3>
         </div>
       </div>
@@ -134,8 +133,8 @@ const JoinedAuctions = () => {
 
   if (error) {
     return (
+
       <div className="ongoing-auctions-page">
-        <Navbar />
         <div className="error-container">
           <h3>Error Loading Auctions</h3>
           <p>{error}</p>
@@ -148,9 +147,11 @@ const JoinedAuctions = () => {
   }
 
   return (
+    <div>
+            <Navbar />
+
     <div className="ongoing-auctions-page">
-      <Navbar />
-      <div className="auctions-container">
+\      <div className="auctions-container">
         <div className="page-header">
           <h1>My Joined Auctions</h1>
           <p>View your registered cricket auctions</p>
@@ -208,6 +209,7 @@ const JoinedAuctions = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };
